@@ -22,5 +22,11 @@
   "devDependencies": {
     "nodemon": "1.18.4"
   },
+  "author": "Demian Seiler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GitAddRemote/tronic-projects-api/issues"
+  },
+  "homepage": "https://github.com/GitAddRemote/tronic-projects-api",
   "keywords": []
 }
