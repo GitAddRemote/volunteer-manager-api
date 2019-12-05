@@ -1,0 +1,54 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Node, Firebase, Express Example API</title>
+  </head>
+  <body>
+    <div id="container">
+      <div id="item">
+        <h2>Volunteer API</h2>
+      </div>
+      <div id="item">
+        <h3>Technologies: Node, Express, JWT, Firebase</h3>
+      </div>
+      <div id="item">
+        <div id="item">
+          <h3>Overview:</h3>
+        </div>
+        <div id="item">
+          A basic sample set of API's to perform CRUD on a generic "Volunteer"
+          collection in a Firebase, Firestore database. These API's are
+          protected using a JWT returned to the client upon successful login.
+          All subsequent API requests require a valid, non-expired JWT to be
+          included in the header.
+          <br />
+          <br />
+          This is essentially the beginnings of a small mockup of a larger
+          project I am considering building that will most likely be fronted by
+          React native or be an exclusive to iOS built with Swift.
+        </div>
+      </div>
+      <div id="item">
+        <div id="item">
+          <h3>API List:</h3>
+        </div>
+        <div id="item">
+          <ul>
+            <li>GET: /api/v1/volunteers</li>
+            <li>GET: /api/v1/volunteer</li>
+            <li>PUT: /api/v1/volunteer</li>
+            <li>POST: /api/v1/volunteer</li>
+            <li>DELETE /api/v1/volunteer</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

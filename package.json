@@ -1,0 +1,26 @@
+{
+  "name": "volunteer-api-node-express-jwt-firestore",
+  "version": "1.0.0",
+  "description": "Basic API used to query and manage a database of volunteers.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js localhost 8080",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "body-parser": "1.19.0",
+    "compression": "^1.7.4",
+    "dotenv": "^8.2.0",
+    "express": "4.17.1",
+    "firebase": "7.2.3",
+    "jsonwebtoken": "8.5.1",
+    "morgan": "^1.9.1",
+    "serve-static": "^1.14.1"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.4"
+  },
+  "keywords": []
+}
