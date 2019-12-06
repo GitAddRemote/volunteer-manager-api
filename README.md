@@ -1,21 +1,28 @@
-#TRONIC PROJECTS API
+# TRONIC PROJECTS API
 
 ## Technologies: 
 Node, Express, JWT, Firebase
 
 ## Overview:
-A basic sample set of API's to perform CRUD on a generic "Volunteer" collection in a Firebase, Firestore database. These API's are protected using a JWT returned to the client upon successful login. All subsequent API requests require a valid, non-expired JWT to be included in the header.
-
-This is essentially the beginnings of a small mockup of a larger project I am considering building that will most likely be fronted by React native or be an exclusive to iOS built with Swift.
+Tronic Projects API is a simple project to allow users to create simple project workflows and assign resources to these project and workflow items. Projects will be task focused with a Kanban
 
 ## API List
-1. POST: /api/v1/login
-2. GET: /api/v1/volunteers
-3. GET: /api/v1/volunteer
-4. PUT: /api/v1/volunteer
-5. POST: /api/v1/volunteer
-6. DELETE /api/v1/volunteer
 
+### User API
+1. GET: /api/v1/volunteers
+2. GET: /api/v1/volunteer
+3. PATCH: /api/v1/volunteer
+4. POST: /api/v1/volunteer
+5. DELETE /api/v1/volunteer
+
+### Projects API
+1. GET: /api/v1/projectss
+2. GET: /api/v1/project
+3. PATCH: /api/v1/project
+4. POST: /api/v1/project
+5. DELETE /api/v1/project
+
+### Auth API
 
 ## TODO ITEMS
 1. Create payload validation middleware
