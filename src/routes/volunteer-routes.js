@@ -1,8 +1,8 @@
 // Load 3rd Party Packages
-const firebase = require("firebase");
-const bodyParser = require("body-parser");
+const firebase = require('firebase');
+const bodyParser = require('body-parser');
 const express = require('express');
-const config = require("../firebase-config");
+const config = require('../firebase-config');
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
@@ -14,11 +14,11 @@ if (!firebase.apps.length) {
  * @param {*} res
  * @param {*} next
  */
-const volunteers = async (req, res, next) => {
+const getVolunteers = async (req, res, next) => {
   try {
-    
+
     // Set reference
-    const dbVolunteers = firebase.firestore().collection("volunteers");
+    const dbVolunteers = firebase.firestore().collection('volunteers');
     const collection = await dbVolunteers.get();
 
     const responseObj = {
@@ -28,7 +28,7 @@ const volunteers = async (req, res, next) => {
     };
     return res.status(200).send(responseObj);
   } catch (error) {
-    return res.status(404).send({ error: "unable to retrieve volunteers" });
+    return res.status(404).send({ error: 'Unable to retrieve volunteers' });
   }
 };
 
@@ -38,11 +38,11 @@ const volunteers = async (req, res, next) => {
  * @param {*} res
  * @param {*} next
  */
-const volunteer = async (req, res, next) => {
+const getVolunteer = async (req, res, next) => {
   try {
 
     // Set reference
-    const dbVolunteers = firebase.firestore().collection("volunteers");
+    const dbVolunteers = firebase.firestore().collection('volunteers');
     const volunteerId = req.params.id;
     const volunteer = await dbVolunteers.doc(volunteerId).get();
 
@@ -52,37 +52,39 @@ const volunteer = async (req, res, next) => {
     };
     return res.status(200).send(responseObj);
   } catch (error) {
-    return res.status(404).send({ error: "unable to retrieve volunteer" });
+    return res.status(404).send({ error: 'unable to retrieve volunteer' });
   }
 };
 
 /**
  * TODO: Comments
  * TODO: Validation of object before set, (validation middleware?)
- * TODO: Figure out why set doesn't return the updated object
  * @param {} req
  * @param {*} res
  * @param {*} next
  */
-const addVolunteer = async (req, res, next) => {
+const createVolunteer = async (req, res, next) => {
   try {
     // Set reference
-    const dbVolunteers = firebase.firestore().collection("volunteers");
+    const dbVolunteers = firebase.firestore().collection('volunteers');
     const volunteer = req.body.volunteer;
 
-    // TODO: Why is set returning undefined. Based on docs we should be returning this instead of having to pull updated again
-    let addedVolunteer = await dbVolunteers.doc().set(volunteer);
+    let ref = await dbVolunteers.add(volunteer);
+    const addedVolunteer = await dbVolunteers.doc(ref.id).get();
+
     const responseObj = {
+      id: ref.id,
+      ...addedVolunteer.data()
     };
-    return res.status(200).send(responseObj);
+    return res.status(201).send(responseObj);
   } catch (error) {
-    return res.status(404).send({ error: "unable to add volunteer" });
+    console.log("ER:", error);
+    return res.status(404).send({ error: 'unable to add volunteer' });
   }
 };
 
 /**
  * TODO: Comments
- * TODO: Figure out why set doesn't return the updated object per docs
  * @param {} req
  * @param {*} res
  * @param {*} next
@@ -90,25 +92,25 @@ const addVolunteer = async (req, res, next) => {
 const updateVolunteer = async (req, res, next) => {
   try {
     // Set reference
-    const dbVolunteers = firebase.firestore().collection("volunteers");
+    const dbVolunteers = firebase.firestore().collection('volunteers');
     const id = req.params.id;
     const volunteer = req.body.volunteer;
-    // TODO: Why is set returning undefined. We shoudl be returning this instead of having to pull updated again
-    let vol = await dbVolunteers.doc(id).update(volunteer);
+
+    await dbVolunteers.doc(id).update(volunteer);
     let updatedVolunteer = await dbVolunteers.doc(id).get();
 
     const responseObj = {
+      id: id,
       ...updatedVolunteer.data()
     };
-    return res.status(200).send(responseObj);
+    return res.status(201).send(responseObj);
   } catch (error) {
-    return res.status(404).send({ error: "unable to update volunteer" });
+    return res.status(404).send({ error: 'unable to update volunteer' });
   }
 };
 
 /**
  * TODO: Comments
- * TODO: Figure out why delete doesn't return the deleted object per docs
  * @param {} req
  * @param {*} res
  * @param {*} next
@@ -116,17 +118,14 @@ const updateVolunteer = async (req, res, next) => {
 const deleteVolunteer = async (req, res, next) => {
   try {
     // Set reference
-    const dbVolunteers = firebase.firestore().collection("volunteers");
+    const dbVolunteers = firebase.firestore().collection('volunteers');
     const id = req.params.id;
-    // TODO: Why is delete returning undefined. We shoudl be returning this
-    let deletedVolunteer = await dbVolunteers.doc(id).delete();
-    const responseObj = {
-      // ...deletedVolunteer.data() || {}
-    };
 
-    return res.status(200).send(responseObj);
+    await dbVolunteers.doc(id).delete();
+    return res.sendStatus(204);
+
   } catch (error) {
-    return res.status(404).send({ error: "unable to delete volunteer" });
+    return res.status(404).send({ error: 'unable to delete volunteer' });
   }
 };
 
@@ -139,12 +138,12 @@ const urlEncodedBodyParser = bodyParser.urlencoded({
   extended: true
 });
 
-volunteerRouter.route("/")
-  .get(volunteers)
-  .post(bodyParser.json(), addVolunteer);
+volunteerRouter.route('/')
+  .get(getVolunteers)
+  .post(bodyParser.json(), createVolunteer);
 
-volunteerRouter.route("/:id")
-  .get(volunteer)
+volunteerRouter.route('/:id')
+  .get(getVolunteer)
   .patch(bodyParser.json(), urlEncodedBodyParser, updateVolunteer)
   .delete(deleteVolunteer);
 

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.js localhost 8080",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "mocha --timeout 10000",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -20,6 +20,9 @@
     "serve-static": "^1.14.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^6.2.2",
     "nodemon": "1.18.4"
   },
   "author": "Demian Seiler",

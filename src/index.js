@@ -35,3 +35,5 @@ app.listen(port, () =>
     `Tronic Volunteer Manager Server Running On Port: ${port}!`
   )
 );
+
+module.exports = app; // for testing
